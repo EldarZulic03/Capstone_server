@@ -1,0 +1,51 @@
+support delete
+transfer audio file
+error handling
+on reception of audio train a synthesizer and pickle it under the loved one dir
+in people manager, when we create a loved one we should create a folder where all the result snippets go for audio and then video from the syncing
+
+for text training data have a dictionary { Q : A } so we can just send to python and in python just pickle and save it under that loved one
+front-end needs input for the chatbot which we need endpoints for
+
+curr_vid = nod_and_smile
+while true:
+	play video
+	get user response
+	get bot response video to play
+	curr_vid = new_vid
+
+Alamofire setup and integration
+Get deepsake and voice synth working on mac
+create a list of sentences that we need videos from. When we add loved ones create all those videos, save the voice synthesizer in the right file as well
+setup firebase
+Setup front->backend call to upload loved one answers
+facetime call
+arch -x86_64 python -m pip install PyQt5
+
+make sure recorded audio is correct (play in ui to double check)
+give them a sentence to read out perhaps
+
+ml models should operate in terms of filepaths and path.exitst etc. The patient/loved one information should not be mixed in with the ml modules. Abstract it away, as far as ml models are concerned they deal with file paths. We tell you where audio, image are and ask you to fetch pickled model if it exists etc
+
+
+for voice synth
+
+create_model_from_path(path, name)
+save_current_model_to_path(path)
+set_current_model(name)
+load_model_from_path_if_exists(path,name)
+
+can do similar stuff for wav2lip wrapper.
+Need to create a folder under loved ones where the snippets will go
+
+Next Steps:
+Integrate and update wrappers
+Test with hardset list of words to gen all voice snippets
+Test uploading to firebase
+
+platform for pod
+
+init ml models once (save some runtime overhead, atleast for the VC idk about the deepfake)
+need to create voice snippter folder under the loved ones directory
+
+on loved one creation we need to make a folder where the generated snippets go, on delete of loved one or patient we need to do some cleaning in firebase
