@@ -14,6 +14,12 @@ def upload_file(fileName, dstFile):
 	blob.make_public()
 	return blob.public_url
 
+def download_file(cloud_file_name, to_file):
+	bucket = storage.bucket()
+	blob = bucket.blob(cloud_file_name)
+	blob.download_to_filename(to_file)	
+
 #init()
+#download_file("img.jpeg","image.jpeg")
 #res = upload_file("img.jpeg","0/0/test.jpeg")
 #print("your file url {}".format(res))
