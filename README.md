@@ -1,6 +1,8 @@
 # Capstone
 Capstone Repo
 
+You need to download the synthesizer.pt and store it under voice_cloning/saved_models/default/synthesizer.pt. Can download from here: https://drive.google.com/file/d/1YAoaMeMSb68xp-iOf9CRliAGK2iCncPP/view?usp=sharing
+
 
 Start server using: python -m flask run
 
