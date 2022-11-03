@@ -3,8 +3,8 @@ from firebase_admin import credentials, initialize_app, storage
 
 def init():
 	# Init firebase with your credentials
-	cred = credentials.Certificate("test-873a0-5403e52fd2d9.json")
-	initialize_app(cred, {'storageBucket': 'test-873a0.appspot.com'})
+	cred = credentials.Certificate("virtual-presence-app-2a440e2cacfc.json")
+	initialize_app(cred, {'storageBucket': 'virtual-presence-app.appspot.com'})
 
 
 def upload_file(fileName, dstFile):
@@ -21,5 +21,5 @@ def download_file(cloud_file_name, to_file):
 
 #init()
 #download_file("img.jpeg","image.jpeg")
-#res = upload_file("img.jpeg","0/0/test.jpeg")
+#res = upload_file("image.jpeg","test.jpeg")
 #print("your file url {}".format(res))

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "virtual-presence-app",
+  "private_key_id": "2a440e2cacfca2a9a1082cb954a479a775320295",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCmT5oe51WhbKjw\nann3WnREtKKh/i2kkcu24LiYjHFyFWz0ewnmNCoHcZnvW/dihTVGggQ8Bjmof50Z\nXImpfP/PYaEmd9bVhE5YSUzGNlcjlKbajuyjw37EnApd48g8kJ59hPrvtG1ednzR\nqE0zdc68d/w5LZ4vGhmZO7zu2f9NblEoxUhgCD3cCSTJyXRJUx7KD7FZsobhCWY6\n4aj049dmDaLlUhlHBqbzO7ovpF+fmMtfMzrSGfIvEnCssfcifc5yBqa/pwlywugS\nkqdzgZ8CaXT9r8Kx4EMFwKI4ZxAZq3nOoovDTcMNgg7djNQbb/NBRN907QFS7+pb\nPFRzkAlZAgMBAAECggEAAmtvERsJhmc30AOkkaI5xdQg951kmZvbbGY5mVKVxfSk\n2Ku/mZ9RqzkOZcqfP0oz27pBiIQIq7hrlzZe9F3StPg1KYOd1w5tO2CZotqgiu57\nPPvOWpWaDw88IWCShbsO60GXiwxDeRfdOgmqUeDZaKmQPF67CfFlxPJ3DbyTN9Oo\njo5qjbQ8A/sqf3Iem9hGfH88kgr4cqd3Lmc7WkPzPBhGHF5UCz73U6WVcxTuzC3z\nAv9ivYHdvzw3ISm8p7yLZnmcB7mE/Ycon4niPF9JbD8Blk5EBkTxvP5BIj2Gp67A\n1w3RfeEdPCoDnAqMgMGBS12lzJD3C4NFCuwLDuyVNwKBgQDPHFQhFt5qx65j2KnU\niyts0qIHEkLweD4o9ikbOJ3oJ1ktCyf5gj2vTJ1SL5wSu9+T5CTt/+Zv7V3XooYf\nRlA85s2hUIQWQXvQJhH/bYWhmGo+qJ5k61mrIwjbl3eaXBLR4DT5ltNNXSDg2lqT\nuUwb++cR/ZgGKISpv/mk1n5P8wKBgQDNkcB2DcBAS3q1gFQZG3wLbtgZ5MG/DSEy\n1TBdAZhb+BdXeakkC2TNmkrhtqIspCkfmY5wBXQC1WHOgDTAglD4xVjV0pjBx1IP\njD++X4SRvi+Vj4Cy4CymIdBO4s4yKSYkKD5wj2LvxlQVsyU32CMFnoTSpOdGe0hV\noYv8z8ZggwKBgAQUb8fTFoCN/G51FytbrnhPUefHwU/RXpAaAUdK/zlShRwxCxGM\nMkDgxnyW+YEY+FeGd//EObrctyuHRRMapHv+o/BYkLGLiq/YACTC+I3tXbJsSep9\nBGAtqYAB5NZCmBBQVVrRUMpGWl5zjrM4RDqM5Mli8Hq2k55wbK+FlilnAoGAY+qJ\n71dzsEx/kiSTu7heLHht1PgZK7FIB5sTbMFPurP1NHFPwtM+5agu6VKJtMT9r/xE\n/THJV287oNEz0rYEgUX6jcNUuCsXObNjcDahCu2z1y/u0AKh8QXSZ+VZb4wMm9pr\nru4imoR9biaq2l/Vde+8g13fg6R8XhKtJe4fb90CgYA+ES6wST6xI8st/Tmx3QEZ\nrTar/u2OZNAQBFluDHRwhmxYplH6fgYpwTN+mBUAXu8Hti7uJNuTCpynTFWJ2zEx\nNCdJcq/+7/BMDM5Goj//YxvdrxWcvXi4SMoYBLmmOZcwaV9lpwJDs/l7ZbJaQuX4\nf/FXbADBVzpWL5m9vWZLMg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "virtual-presence-app@appspot.gserviceaccount.com",
+  "client_id": "110214408021697296124",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/virtual-presence-app%40appspot.gserviceaccount.com"
+}
