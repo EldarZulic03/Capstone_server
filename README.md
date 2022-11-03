@@ -38,9 +38,10 @@ We use local storage for ML training, and firebase to host our snippets, so this
 
 
 ---chatbot.py---
+
 place holder module that provides the same interface the final chatbot should. Used to abstract chatbot training and prediction for the main server code.
 
-Understanding the data management, filesystem and firebase storage:
+#####Understanding the data management, filesystem and firebase storage#####
 
 people_data directory is created by people_manager on init. This is where we store all the data for people. people_data will contain pickle files for people_manager to store the patient,loved one info (name, id , current uuid count etc) to disk. It also contains patient_data dir which has patient data...
 
