@@ -8,7 +8,7 @@ Start server using: python -m flask run
 
 Then go to: 127.0.0.1:5000 (or whichever host you specify using --host to see what the server displays)
 
-to be able to use the deepfake you need to run ""brew install ffmpeg" and pip install -r requirements.txt
+to be able to use the deepfake you need to run ""brew install ffmpeg" and pip install -r requirements.txt. You may have to pip or brew install the packages in requirements.txt one by one if you find some trouble
 
 If on an M1 mac and pyaudio is causing trouble this might be useful: https://qiita.com/yukilab/items/d50a10f1d46c44ae0757
 
