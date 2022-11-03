@@ -20,6 +20,7 @@ import voice_cloning_wrapper as vcl
 import firebase_manager as fbm
 import chatbot as cb
 from pydub import AudioSegment
+import time
 
 #TODO: do this cleaner
 def process_responses(responses):
@@ -187,6 +188,7 @@ def video_feed():
 
 @app.route('/training_data', methods=['POST'])
 def training_data():
+	time.sleep(10)
 	data = request.get_json()
 	print(data)
 	p_idx = data['p_idx']
@@ -194,8 +196,8 @@ def training_data():
 	base_dir = 'people_data/patient_data/{}/{}/'.format(p_idx,lo_idx)
 	fbm.download_file("training_data/face.jpeg",base_dir + "face.jpeg")
 	fbm.download_file("training_data/voice.m4a",base_dir + "voice.m4a")
-	m4a_file = base_dir + 'tmp.m4a'
-	wav_filename = base_dir + "tmp.wav"
+	m4a_file = base_dir + 'voice.m4a'
+	wav_filename = base_dir + "voice.wav"
 	track = AudioSegment.from_file(m4a_file,  format= 'm4a')
 	file_handle = track.export(wav_filename, format='wav')
 	train_models(p_idx, lo_idx)
