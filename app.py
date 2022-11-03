@@ -239,6 +239,22 @@ def manage_loved_one():
 		pm.delete_loved_one(int(data['p_idx']),int(data['lo_idx']))
 		return {}
 
+@app.route('/responses', methods=['GET'])
+def get_response():
+	data = request.get_json()
+	print(data)
+	if request.method == 'GET':
+		loved_one = data['lo_idx']
+		user_input = data['input']
+		#read from disk only once
+		#TODO: delete from memory at some point when loved/one patient is removed
+		if loved_one not in models:
+			with open('people_data/patient_data/{}/{}/chatbot'.format(patient), 'rb') as handle:
+				models[loved_one] = pickle.load(handle)
+		response = cb.generate_response(models[loved_one], user_input)
+		return {"response" : response}
+
+
 if __name__ == "__main__":
 	pm.init()
 	fbm.init()
