@@ -19,6 +19,7 @@ import wav2lip_wrapper as w2l
 import voice_cloning_wrapper as vcl
 import firebase_manager as fbm
 import chatbot as cb
+from pydub import AudioSegment
 
 #TODO: do this cleaner
 def process_responses(responses):
@@ -184,27 +185,20 @@ def index():
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/upload_image/<p_idx>/<lo_idx>', methods=['POST'])
-def upload_image(p_idx, lo_idx):
-	print('Got an image')
-	image_64_encoded = request.form['image']
-	image_64_encoded = image_64_encoded.replace(" ","+")
-	image_64_decode = base64.b64decode(image_64_encoded) 
-	image_result = open('people_data/patient_data/' + p_idx + '/' + lo_idx + '/face.jpeg', 'wb') # create a writable image and write the decoding result
-	image_result.write(image_64_decode)
-	image_result.close()
+@app.route('/training_data', methods=['POST'])
+def training_data():
+	data = request.get_json()
+	print(data)
+	p_idx = data['p_idx']
+	lo_idx = data['lo_idx']
+	base_dir = 'people_data/patient_data/{}/{}/'.format(p_idx,lo_idx)
+	fbm.download_file("training_data/face.jpeg",base_dir + "face.jpeg")
+	fbm.download_file("training_data/voice.m4a",base_dir + voice "voice.m4a")
+	m4a_file = base_dir + 'tmp.m4a'
+	wav_filename = base_dir + "tmp.wav"
+	track = AudioSegment.from_file(m4a_file,  format= 'm4a')
+	file_handle = track.export(wav_filename, format='wav')
 	train_models(p_idx, lo_idx)
-	return {"status" : "succeeded"}
-
-@app.route('/upload_audio/<p_idx>/<lo_idx>', methods=['POST','GET'])
-def upload_audio(p_idx, lo_idx):
-	print('Got audio from loved one, not doing anything with it')
-    #TODO: this cant be on by default...
-	return {"status" : "succeeded"}
-	mp3_64_encoded = request.form['loved_one.mp3']
-	image_result = open('loved_one.mpeg', 'wb') # create a writable image and write the decoding result
-	image_result.write(mp3_64_encoded)
-	image_result.close()
 	return {"status" : "succeeded"}
 
 @app.route('/all_patients', methods=['GET'])

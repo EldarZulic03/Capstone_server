@@ -32,3 +32,4 @@ urllib3
 visdom
 webrtcvad
 firebase_admin
+pydub
