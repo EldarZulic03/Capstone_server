@@ -37,6 +37,9 @@ This is the wrapper for the lip syncing deepfake code. We use it to pass the res
 We use local storage for ML training, and firebase to host our snippets, so this is our interface to firebase. Currently used just to upload blobs for the snippets, but we may use it to download training audio since sending from front->backend directly is causing issues, so watch out for that.
 
 
+---chatbot.py---
+place holder module that provides the same interface the final chatbot should. Used to abstract chatbot training and prediction for the main server code.
+
 Understanding the data management, filesystem and firebase storage:
 
 people_data directory is created by people_manager on init. This is where we store all the data for people. people_data will contain pickle files for people_manager to store the patient,loved one info (name, id , current uuid count etc) to disk. It also contains patient_data dir which has patient data...

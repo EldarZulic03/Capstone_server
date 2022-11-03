@@ -10,14 +10,15 @@ import json
 import os
 from flask import Flask, render_template, request, session, redirect, Response
 from flask_session import Session
-
+import shutil
 import pyaudio
 import cv2
-
+import pickle5 as pickle
 import people_manager as pm
 import wav2lip_wrapper as w2l
 import voice_cloning_wrapper as vcl
 import firebase_manager as fbm
+import chatbot as cb
 
 #TODO: do this cleaner
 def process_responses(responses):
@@ -29,17 +30,12 @@ def process_responses(responses):
 		res[qa[0]] = qa[1]
 	return res
 
-#TODO: need to talk to chatbot api to get these
-def get_sentences(patient, loved_one):
-	return ["this is a test sentence", "this is another test sentence", "this is the last test sentence"]
-
 #TODO: upload to firebase
-def gen_snippets(patient, loved_one):
+def gen_snippets(patient, loved_one, sentences):
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
-	face = base_path + "face.jpg"
+	face = base_path + "face.jpeg"
 	voice = base_path + "voice.wav"
 	snippets = base_path + "snippets/"
-	sentences = get_sentences(patient, loved_one)
 	vc = vcl.VoiceChanger()
 	vc.load_and_set_new_model(voice,"{}_{}".format(patient,loved_one))
 	#create .wavs for sentences
@@ -61,6 +57,27 @@ def gen_snippets(patient, loved_one):
 		dst_file = "{}/{}/{}".format(patient, loved_one, filename)
 		url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
 		print(url)
+
+#Train the models
+#TODO: eventaully we cant keep using placeholder data
+def train_models(patient,loved_one):
+	#temporarily use placeholder data until audio upload is working...
+	shutil.copyfile('test_data/trump.jpeg', 'people_data/patient_data/{}/{}/face.jpeg'.format(patient,loved_one))	
+	shutil.copyfile('test_data/trump.wav', 'people_data/patient_data/{}/{}/voice.wav'.format(patient,loved_one))
+
+	loved_one_responses = {} 
+	patient_responses = {}
+	with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
+		patient_responses = pickle.load(handle)	
+	with open('people_data/patient_data/{}/{}/responses'.format(patient,loved_one), 'rb') as handle:
+		loved_one_responses = pickle.load(handle)
+	#merge them
+	all_responses = patient_responses.update(loved_one_responses)
+	model, responses = cb.train_model(all_responses)
+	with open('people_data/patient_data/{}/{}/chatbot'.format(patient,loved_one), 'wb') as handle:
+		pickle.dump(model,handle)
+	
+	gen_snippets(patient, loved_one, responses)
 
 #create main app
 app = Flask(__name__)
@@ -166,14 +183,11 @@ def upload_image(p_idx, lo_idx):
 	print('Got an image')
 	image_64_encoded = request.form['image']
 	image_64_encoded = image_64_encoded.replace(" ","+")
-	#print(image_64_encoded)
-	#print(len(image_64_encoded))
-	#image_64_encoded += "=" * ((4 - (len(image_64_encoded) % 4))) #ugh
-	#print(len(image_64_encoded))
 	image_64_decode = base64.b64decode(image_64_encoded) 
 	image_result = open('people_data/patient_data/' + p_idx + '/' + lo_idx + '/face.jpeg', 'wb') # create a writable image and write the decoding result
 	image_result.write(image_64_decode)
 	image_result.close()
+	train_models(p_idx, lo_idx)
 	return {"status" : "succeeded"}
 
 @app.route('/upload_audio/<p_idx>/<lo_idx>', methods=['POST','GET'])

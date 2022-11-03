@@ -18,3 +18,7 @@ endpoint for response gen (need to load models from pickle into memory etc)
 process dictionary w loved one and patient responses
 video download and rename/convert to wav in local storage
 add faisal to github
+
+firebase in frontend
+
+placeholder image in frontend so we dont have to keep messing with backend filesystem
