@@ -30,6 +30,16 @@ def process_responses(responses):
 		res[qa[0]] = qa[1]
 	return res
 
+#lowercase and remove spaces in filename 
+#TODO: handle punctuation...
+def get_fname_for_sentence(sentence):
+	words = sentence.lower()
+	words = words.split()
+	fname = ''
+	for word in words:
+		fname += word
+	return fname
+
 #TODO: upload to firebase
 def gen_snippets(patient, loved_one, sentences):
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
@@ -40,11 +50,7 @@ def gen_snippets(patient, loved_one, sentences):
 	vc.load_and_set_new_model(voice,"{}_{}".format(patient,loved_one))
 	#create .wavs for sentences
 	for sentence in sentences:
-		words = sentence.lower()
-		words = words.split()
-		fname = ''
-		for word in words:
-			fname += word
+		fname = get_fname_for_sentence(sentence)
 		vc.synthesize_sentence(sentence,snippets+"audio/"+fname+".wav")
 	#sync the audio created above to the face image
 	for filename in os.listdir(snippets+"audio"):
