@@ -188,6 +188,7 @@ def video_feed():
 
 @app.route('/training_data', methods=['POST'])
 def training_data():
+	#TODO: This is a hack, need to syncrhonize requests in the front-end
 	time.sleep(10)
 	data = request.get_json()
 	print(data)
