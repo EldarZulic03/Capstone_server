@@ -252,7 +252,7 @@ def get_response():
 			with open('people_data/patient_data/{}/{}/chatbot'.format(patient), 'rb') as handle:
 				models[loved_one] = pickle.load(handle)
 		response = cb.generate_response(models[loved_one], user_input)
-		return {"response" : get_fname_for_sentence(response)}
+		return {"response" : get_fname_for_sentence(response) + '.mp4'}
 
 
 if __name__ == "__main__":
