@@ -24,3 +24,5 @@ firebase in frontend
 placeholder image in frontend so we dont have to keep messing with backend filesystem
 
 get rid of button to load loved ones in frontend
+
+on delete of a patient or loved one we need to purge the firebase storage for that person and their dependants
