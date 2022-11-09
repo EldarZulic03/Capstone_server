@@ -4,6 +4,8 @@ Capstone Repo
 You need to download the synthesizer.pt and store it under voice_cloning/saved_models/default/synthesizer.pt. Can download from here: https://drive.google.com/file/d/1YAoaMeMSb68xp-iOf9CRliAGK2iCncPP/view?usp=sharing
 
 
+You need to download wav2lip_gan.pth and put it under wav2lip/checkpoints/wav2lip_gan.pth you can download it from here: https://drive.google.com/file/d/1XdUcCD2onItOG5JEJztiyTS_7p8OVkPA/view?usp=sharing
+
 Start server using: python app.py
 
 Then go to: 127.0.0.1:5000 (or whichever host you specify using --host to see what the server displays)
