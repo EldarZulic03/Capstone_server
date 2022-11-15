@@ -33,3 +33,5 @@ visdom
 webrtcvad
 firebase_admin
 pydub
+tflearn
+nltk
