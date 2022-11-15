@@ -21,6 +21,8 @@ import chatbot as cb
 from pydub import AudioSegment
 
 #TODO: do this cleaner
+#because dictionary entries have commas in them we get the as a string like:
+# "key:val;key:val;"
 def process_responses(responses):
 	#trim last ; off and split
 	question_answers = responses[:-1].split(';')
@@ -31,13 +33,16 @@ def process_responses(responses):
 	return res
 
 #lowercase and remove spaces in filename 
-#TODO: handle punctuation...
 def get_fname_for_sentence(sentence):
 	words = sentence.lower()
-	words = words.split()
 	fname = ''
-	for word in words:
-		fname += word
+	for letter in words:
+		if letter == '':
+			fname += '_'
+		elif not letter.isalpha():
+			continue
+		else:
+			fname += letter
 	return fname
 
 #TODO: upload to firebase
