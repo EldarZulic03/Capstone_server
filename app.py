@@ -126,6 +126,10 @@ def manage_patient():
 	print(data) 
 	if request.method == 'POST':
 		responses = process_responses(data['responses'])
+		responses['name'] = data['name']
+		responses['gender'] = data['gender']
+		responses['date_of_birth'] = data['DOB']
+		print(responses)
 		return pm.add_patient(data['name'], data['gender'], data['DOB'], responses)
 	elif request.method == 'DELETE':
 		pm.delete_patient(int(data['p_idx']))
@@ -137,6 +141,10 @@ def manage_loved_one():
 	print(data)
 	if request.method == 'POST':
 		responses = process_responses(data['responses'])
+		responses['name'] = data['name']
+		responses['gender'] = data['gender']
+		responses['date_of_birth'] = data['DOB']
+		print(responses)
 		return pm.add_loved_one(int(data['p_idx']),data['name'], data['gender'], data['DOB'], responses)
 	elif request.method == 'DELETE':
 		pm.delete_loved_one(int(data['p_idx']),int(data['lo_idx']))
