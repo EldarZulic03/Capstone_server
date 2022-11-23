@@ -1,0 +1,48 @@
+{"intents": [
+        {"tag": "patientLocation",
+         "patterns": ["where am i", "am i in", "why am i here"],
+         "responses": ["You are being treated for Dementia in "],
+         "context_set": ""
+        },
+        {"tag": "greeting",
+         "patterns": ["Hi", "Is anyone there?", "Hello", "Good day", "Whats up", "Hey"],
+         "responses": ["Hello!", "Good to see you again!", "Hi, good to see you"],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": ["see ya", "see you later", "bye", "goodbye", "I am Leaving", "Have a Good day", "I need to go", "I'm gonna leave"],
+         "responses": ["Bye, see you later", "Talk to you later", "Goodbye!"],
+         "context_set": ""
+        },
+        {"tag": "lovedOneAge",
+         "patterns": ["how old", "what is your age", "how old are you", "age?"],
+         "responses": ["I am "],
+         "context_set": ""
+        },
+        {"tag": "lovedOneLocation",
+         "patterns": ["where are you", "where do you live"],
+         "responses": ["I am in ", "I live in "],
+         "context_set": ""
+        },
+        {"tag": "lovedOneName",
+         "patterns": ["who are you", "what is your name", "what should I call you", "whats your name?"],
+         "responses": ["I'm "],
+         "context_set": ""
+        },
+        {"tag": "howAreYou",
+         "patterns": ["how are you", "how's it going", "how have you been"],
+         "responses": ["I'm doing well, you?", "Good, how about you?", "Pretty good, how about you?"],
+         "context_set": ""
+       },
+       {"tag": "lovedOneHobbies",
+        "patterns": ["what do you do in your free time", "what do you like to do", "what are your hobbies"],
+        "responses": ["I enjoy "],
+        "context_set": ""
+      },
+      {"tag": "lovedOneChildren",
+       "patterns": ["how are your kids", "how are the kids", "how are your children", "how are the children", "children", "kids", "how many kids", "how many children"],
+       "responses": ["I have "],
+       "context_set": ""
+     }
+   ]
+}

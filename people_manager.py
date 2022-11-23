@@ -136,6 +136,7 @@ def add_patient(name, gender, dob, responses):
 
 #read existing data from disk, other wise initialize
 def init():
+	print("Initializing people manager")
 	global patients
 	global loved_ones
 	global patient_uuid

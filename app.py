@@ -20,6 +20,10 @@ import firebase_manager as fbm
 import chatbot as cb
 from pydub import AudioSegment
 
+models = {}
+patient_responses_dict = {}
+loved_one_responses_dict = {}
+
 #TODO: do this cleaner
 #because dictionary entries have commas in them we get the as a string like:
 # "key:val;key:val;"
@@ -83,11 +87,10 @@ def train_models(patient,loved_one):
 	with open('people_data/patient_data/{}/{}/responses'.format(patient,loved_one), 'rb') as handle:
 		loved_one_responses = pickle.load(handle)
 	#merge them
-	all_responses = patient_responses.update(loved_one_responses)
-	model, responses = cb.train_model(all_responses)
-	with open('people_data/patient_data/{}/{}/chatbot'.format(patient,loved_one), 'wb') as handle:
-		pickle.dump(model,handle)
-	
+	print(patient_responses)
+	print(loved_one_responses)
+	responses = cb.get_possible_responses(patient_responses, loved_one_responses)
+	print(responses)
 	gen_snippets(patient, loved_one, responses)
 
 #create main app
@@ -150,23 +153,33 @@ def manage_loved_one():
 		pm.delete_loved_one(int(data['p_idx']),int(data['lo_idx']))
 		return {}
 
-@app.route('/responses', methods=['GET'])
+@app.route('/responses', methods=['POST'])
 def get_response():
 	data = request.get_json()
 	print(data)
-	if request.method == 'GET':
+	if request.method == 'POST':
 		loved_one = data['lo_idx']
 		user_input = data['input']
-		#read from disk only once
-		#TODO: delete from memory at some point when loved/one patient is removed
-		if loved_one not in models:
-			with open('people_data/patient_data/{}/{}/chatbot'.format(patient), 'rb') as handle:
-				models[loved_one] = pickle.load(handle)
-		response = cb.generate_response(models[loved_one], user_input)
+		patient = data['p_idx']
+
+		#load the responses in memory since there will be heavy reuse
+		if patient not in patient_responses_dict:
+			with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
+				patient_responses = pickle.load(handle)
+				patient_responses_dict[patient] = patient_responses
+		if loved_one not in loved_one_responses_dict:
+			with open('people_data/patient_data/{}/{}/responses'.format(patient,loved_one), 'rb') as handle:
+				loved_one_responses = pickle.load(handle)
+				loved_one_responses_dict[loved_one] = loved_one_responses
+		
+		loved_one_responses = loved_one_responses_dict[loved_one] 
+		patient_responses = patient_responses_dict[patient]
+		response = cb.generate_response(models['chatbot'], user_input, patient_responses, loved_one_responses)
 		return {"response" : get_fname_for_sentence(response) + '.mp4'}
 
 
 if __name__ == "__main__":
 	pm.init()
 	fbm.init()
+	models['chatbot'] = cb.train_model()
 	app.run(debug=True)

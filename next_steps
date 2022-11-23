@@ -30,3 +30,30 @@ on delete of a patient or loved one we need to purge the firebase storage for th
 refactor url base into a constant in the front-end
 
 refactor firebase upload into a function for readability in front-end
+
+fix keys in front-end
+remove placeholder cb code
+pip tf etc needed for chatbot
+add init function which trains on intents and returns the model if it doesnt exist, else pickle it
+load cb in app.py
+fix get_fname to remove non-letters inplace of _
+load responses for both patient/loved_one into memory same as I was with their models 
+call chatbot gen response where needed
+remove call to trainchatbot, to load chatbot model etc.
+
+
+
+
+
+NEW:
+move patient and loved one info into firebase so storage is unified (dont need to keep rm -rf people_data, just have everything persisitently stored there that matters for init)
+
+training_data in firebase should be patient/loved_one path, need to work around optional string
+
+incorporate dr haques intents
+
+streaming clips
+
+infer questions/answers from stream of audio
+
+refactor http requests in front end for cleaner code
