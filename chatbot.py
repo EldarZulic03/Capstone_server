@@ -99,7 +99,7 @@ def get_possible_responses(patient_attributes, loved_one_attributes):
 
 	return responses
 
-def add_personalized_info(tag, response):
+def add_personalized_info(tag, response, patient_attributes, loved_one_attributes):
     if tag == "patientAge":
         year_of_birth = patient_attributes["date_of_birth"].split('/')[0]
         current_year = datetime.now().year
