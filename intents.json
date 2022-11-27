@@ -1,7 +1,32 @@
 {"intents": [
+        {"tag": "patientAge",
+         "patterns": ["how old am i", "what is my age"],
+         "responses": ["You are "],
+         "context_set": ""
+        },
         {"tag": "patientLocation",
-         "patterns": ["where am i", "am i in", "why am i here"],
+         "patterns": ["where am i", "am i in", "why am i here", "where do I live"],
          "responses": ["You are being treated for Dementia in "],
+         "context_set": ""
+        },
+        {"tag": "patientName",
+         "patterns": ["who am I", "what is my name", "whats my name?"],
+         "responses": ["Your name is "],
+         "context_set": ""
+        },
+        {"tag": "patientHobbies",
+         "patterns": ["what do I do in my free time", "what do I like to do", "what are my hobbies", "what do I like doing"],
+         "responses": ["You like "],
+         "context_set": ""
+        },
+        {"tag": "patientChildren",
+         "patterns": ["how are my kids", "how are my children", "how many kids do I have", "how many children do I have", "who are my kids", "who are my children", "do i have kids", "do i have children", "where are my kids", "where are my children", "my children", "my kids", "my kid", "my child", "my son", "my daughter"],
+         "responses": [""],
+         "context_set": ""
+        },
+        {"tag": "patientSpouse",
+         "patterns": ["how is my spouse", "how is my husband", "how is my wife", "do i have a spouse", "do i have a husband", "do i have a wife", "who is my spouse", "who is my husband", "who is my wife", "where is my spouse", "where is my husband", "where is my wife", "my spouse", "my husband", "my wife"],
+         "responses": [""],
          "context_set": ""
         },
         {"tag": "greeting",
@@ -15,7 +40,7 @@
          "context_set": ""
         },
         {"tag": "lovedOneAge",
-         "patterns": ["how old", "what is your age", "how old are you", "age?"],
+         "patterns": ["what is your age", "how old are you"],
          "responses": ["I am "],
          "context_set": ""
         },
@@ -35,14 +60,24 @@
          "context_set": ""
        },
        {"tag": "lovedOneHobbies",
-        "patterns": ["what do you do in your free time", "what do you like to do", "what are your hobbies"],
+        "patterns": ["what do you do in your free time", "what do you like to do", "what are your hobbies", "what do you like doing"],
         "responses": ["I enjoy "],
         "context_set": ""
-      },
-      {"tag": "lovedOneChildren",
-       "patterns": ["how are your kids", "how are the kids", "how are your children", "how are the children", "children", "kids", "how many kids", "how many children"],
-       "responses": ["I have "],
-       "context_set": ""
-     }
+       },
+       {"tag": "lovedOneChildren",
+        "patterns": ["how are your kids", "how are your children", "how are the children", "how are the kids", "how many kids do you have", "how many children do you have", "who are your kids", "who are your children", "do you have kids", "do you have children", "where are your kids", "where are your children", "your children", "your kids", "your kid", "your child", "your son", "your daughter", "the kids", "the children"],
+        "responses": [""],
+        "context_set": ""
+       },
+       {"tag": "lovedOneSpouse",
+        "patterns": ["how is your spouse", "how is your husband", "how is your wife", "do you have a spouse", "do you have a husband", "do you have a wife", "who is your spouse", "who is your husband", "who is your wife", "where is your spouse", "where is your husband", "where is your wife", "your spouse", "your husband", "your wife"],
+        "responses": [""],
+        "context_set": ""
+       },
+       {"tag": "time",
+        "patterns": ["whats the time", "what time is it", "what is the time", "time"],
+        "responses": ["It is "],
+        "context_set": ""
+       }
    ]
 }
