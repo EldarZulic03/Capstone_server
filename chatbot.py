@@ -90,7 +90,7 @@ def train_model():
 	return model
 
 def get_possible_responses(patient_attributes, loved_one_attributes):
-	responses = ["I see", "Mhmm", "Oh ok", "Yeah?"]
+	responses = ["I see", "Mhmm", "Oh okay", "Ya?"]
 
 	for intent in data["intents"]:
 		for response in intent["responses"]:
@@ -99,38 +99,82 @@ def get_possible_responses(patient_attributes, loved_one_attributes):
 
 	return responses
 
-def add_personalized_info(tag, response, patient_attributes, loved_one_attributes):
-	if tag == "patientLocation":
-		response += patient_attributes["hospital"]
-	elif tag == "lovedOneAge":
-		year_of_birth = loved_one_attributes["date_of_birth"].split('/')[0]
-		current_year = datetime.now().year
-		age = current_year - int(year_of_birth)
-		response += str(age)
-	elif tag == "lovedOneLocation":
-		response += loved_one_attributes["residence"]
-	elif tag == "lovedOneName":
-		response += loved_one_attributes["name"]
-	elif tag == "lovedOneHobbies":
-		if loved_one_attributes["hobbies"] == "":
-			response = "I don't really have any hobbies"
-		else:
-			hobbies = loved_one_attributes["hobbies"].split(",")
-			for i in range(len(hobbies) - 1):
-				response += hobbies[i] + ", "
-			if(len(hobbies) > 1):
-				response += "and "
-			response += hobbies[len(hobbies) - 1]
-	elif tag == "lovedOneChildren":
-		if loved_one_attributes["children"] == "":
-			response = "I don't have kids"
-		else:
-			children = loved_one_attributes["children"].split(",")
-			if len(children) == 1:
-				response += "1 kid. " +  children[0].split(" ")[0] + " is doing great."
-			else:
-				response += str(len(children)) + " kids. They are doing great."
-	return response
+def add_personalized_info(tag, response):
+    if tag == "patientAge":
+        year_of_birth = patient_attributes["date_of_birth"].split('/')[0]
+        current_year = datetime.now().year
+        age = current_year - int(year_of_birth)
+        response += str(age)
+    elif tag == "patientLocation":
+        response += patient_attributes["hospital"] + " in " + patient_attributes["residence"]
+    elif tag == "patientName":
+        response += patient_attributes["name"]
+    elif tag == "patientHobbies":
+        if patient_attributes["hobbies"] == "":
+            response = "You don't really have any hobbies"
+        else:
+            hobbies = patient_attributes["hobbies"].split(", ")
+            for i in range(len(hobbies) - 1):
+                response += hobbies[i] + ", "
+            if len(hobbies) > 1:
+                response += "and "
+            response += hobbies[len(hobbies) - 1]
+    elif tag == "patientChildren":
+        if patient_attributes["children"] == "":
+            response = "You don't have kids"
+        else:
+            children = patient_attributes["children"].split(", ")
+            for i in range(len(children) - 1):
+                response += children[i].split(" ")[0] + ", "
+            if len(children) > 1:
+                response += "and " + children[len(children) - 1].split(" ")[0] + " are "
+            else:
+                response += children[len(children) - 1].split(" ")[0] + " is "
+            response += "doing great"
+    elif tag == "patientSpouse":
+        if patient_attributes["spouse"] == "":
+            response = "You don't have a spouse"
+        else:
+            response += patient_attributes["spouse"].split(" ")[1] + " is doing great"
+    elif tag == "lovedOneAge":
+        year_of_birth = loved_one_attributes["date_of_birth"].split('/')[0]
+        current_year = datetime.now().year
+        age = current_year - int(year_of_birth)
+        response += str(age)
+    elif tag == "lovedOneLocation":
+        response += loved_one_attributes["residence"]
+    elif tag == "lovedOneName":
+        response += loved_one_attributes["name"]
+    elif tag == "lovedOneHobbies":
+        if loved_one_attributes["hobbies"] == "":
+            response = "I don't really have any hobbies"
+        else:
+            hobbies = loved_one_attributes["hobbies"].split(", ")
+            for i in range(len(hobbies) - 1):
+                response += hobbies[i] + ", "
+            if len(hobbies) > 1:
+                response += "and "
+            response += hobbies[len(hobbies) - 1]
+    elif tag == "lovedOneChildren":
+        if loved_one_attributes["children"] == "":
+            response = "I don't have kids"
+        else:
+            children = loved_one_attributes["children"].split(", ")
+            for i in range(len(children) - 1):
+                response += children[i].split(" ")[0] + ", "
+            if len(children) > 1:
+                response += "and " + children[len(children) - 1].split(" ")[0] + " are "
+            else:
+                response += children[len(children) - 1].split(" ")[0] + " is "
+            response += "doing great"
+    elif tag == "lovedOneSpouse":
+        if loved_one_attributes["spouse"] == "":
+            response = "I don't have a spouse"
+        else:
+            response += loved_one_attributes["spouse"].split(" ")[1] + " is doing great"
+    elif tag == "time":
+        response += str(datetime.now().hour) + " " + str(datetime.now().minute)
+    return response
 
 def generate_response(model, inp, patient_attributes, loved_one_attributes):
 	results = model.predict([group_of_words(inp, words_list)])[0]
@@ -145,7 +189,7 @@ def generate_response(model, inp, patient_attributes, loved_one_attributes):
 		response = random.choice(responses)
 		response = add_personalized_info(tag, response, patient_attributes, loved_one_attributes)
 	else:
-		responses = ["I see", "Mhmm", "Oh ok", "Yeah?"]
+		responses = ["I see", "Mhmm", "Oh okay", "Ya?"]
 		response = random.choice(responses)
 
 	print(response)
