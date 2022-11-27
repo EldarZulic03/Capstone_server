@@ -90,7 +90,7 @@ def train_model():
 	return model
 
 def get_possible_responses(patient_attributes, loved_one_attributes):
-	responses = ["I see", "Mhmm", "Oh okay", "Ya?"]
+	responses = ["I see", "Oh okay", "Yaa"]
 
 	for intent in data["intents"]:
 		for response in intent["responses"]:
@@ -189,7 +189,7 @@ def generate_response(model, inp, patient_attributes, loved_one_attributes):
 		response = random.choice(responses)
 		response = add_personalized_info(tag, response, patient_attributes, loved_one_attributes)
 	else:
-		responses = ["I see", "Mhmm", "Oh okay", "Ya?"]
+		responses = ["I see", "Oh okay", "Yaa"]
 		response = random.choice(responses)
 
 	print(response)
