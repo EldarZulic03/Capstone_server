@@ -135,7 +135,7 @@ def add_personalized_info(tag, response, patient_attributes, loved_one_attribute
         if patient_attributes["spouse"] == "":
             response = "You don't have a spouse"
         else:
-            response += patient_attributes["spouse"].split(" ")[1] + " is doing great"
+            response += patient_attributes["spouse"] + " is doing great"
     elif tag == "lovedOneAge":
         year_of_birth = loved_one_attributes["date_of_birth"].split('/')[0]
         current_year = datetime.now().year
@@ -171,7 +171,7 @@ def add_personalized_info(tag, response, patient_attributes, loved_one_attribute
         if loved_one_attributes["spouse"] == "":
             response = "I don't have a spouse"
         else:
-            response += loved_one_attributes["spouse"].split(" ")[1] + " is doing great"
+            response += loved_one_attributes["spouse"] + " is doing great"
     elif tag == "time":
         response += str(datetime.now().hour) + " " + str(datetime.now().minute)
     return response
@@ -214,7 +214,7 @@ def test():
 	"date_of_birth": "2021/01/01",
 	"gender": "Male",
 	"children": "Jack Smith, Jane Smith",
-	"spouse": "wife: Rachel Smith",
+	"spouse": "Rachel Smith",
 	"residence": "Toronto, Ontario",
 	"hobbies": "swimming, cooking",
 	"hospital": "Toronto Western Hospital"
