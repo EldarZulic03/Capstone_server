@@ -49,6 +49,19 @@ def get_fname_for_sentence(sentence):
 			fname += letter
 	return fname
 
+def upload_snippets(patient, loved_one):
+	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
+	face = base_path + "face.jpeg"
+	voice = base_path + "voice.wav"
+	snippets = base_path + "snippets/"
+	
+	#upload all the snippets to the cloud
+	for filename in os.listdir(snippets+"video"):
+		dst_file = "{}/{}/{}".format(patient, loved_one, filename)
+		url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
+		print(url)
+
+
 #TODO: upload to firebase
 def gen_snippets(patient, loved_one, sentences):
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
