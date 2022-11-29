@@ -80,11 +80,13 @@ def gen_snippets(patient, loved_one, sentences):
 		f = os.path.join(snippets+"audio", filename)
 		ls = w2l.LipSyncer(f, face, snippets + 'video/' + vid_name)
 		ls.gen()	
-	#upload all the snippets to the cloud
-	for filename in os.listdir(snippets+"video"):
-		dst_file = "{}/{}/{}".format(patient, loved_one, filename)
-		url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
-		print(url)
+
+	#upload all the snippets to the cloud, sometimes this fails so retry
+	try:
+		upload_snippets(patient, loved_one)
+	except:
+		print("Snippet upload failed, trying again")	
+		upload_snippets(patient, loved_one)
 
 #Train the models
 #TODO: eventaully we cant keep using placeholder data
