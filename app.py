@@ -19,7 +19,9 @@ import voice_cloning_wrapper as vcl
 import firebase_manager as fbm
 import chatbot as cb
 from pydub import AudioSegment
+from multiprocessing import Process
 
+NUM_PROCESSES = 4
 models = {}
 patient_responses_dict = {}
 loved_one_responses_dict = {}
@@ -64,6 +66,7 @@ def upload_snippets(patient, loved_one):
 
 #TODO: upload to firebase
 def gen_snippets(patient, loved_one, sentences):
+	print("Generating Snippets")
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
 	face = base_path + "face.jpeg"
 	voice = base_path + "voice.wav"
@@ -81,12 +84,6 @@ def gen_snippets(patient, loved_one, sentences):
 		ls = w2l.LipSyncer(f, face, snippets + 'video/' + vid_name)
 		ls.gen()	
 
-	#upload all the snippets to the cloud, sometimes this fails so retry
-	try:
-		upload_snippets(patient, loved_one)
-	except:
-		print("Snippet upload failed, trying again")	
-		upload_snippets(patient, loved_one)
 
 #Train the models
 #TODO: eventaully we cant keep using placeholder data
@@ -106,7 +103,39 @@ def train_models(patient,loved_one):
 	print(loved_one_responses)
 	responses = cb.get_possible_responses(patient_responses, loved_one_responses)
 	print(responses)
-	gen_snippets(patient, loved_one, responses)
+	
+	processes = []
+	num_responses = len(responses)
+	responses_per_process = int(num_responses / 4)
+	start_idx = 0
+	end_idx = responses_per_process
+	for i in range(NUM_PROCESSES):
+		#in case its not divisible by NUM_PROCESSES evenly
+		if i == NUM_PROCESSES - 1:
+			end_idx = num_responses
+
+		print("Assigning {}:{} to process {}".format(start_idx,end_idx,i))
+		p_responses = responses[start_idx : end_idx]
+		p = Process(target=gen_snippets, args=(patient, loved_one, p_responses))
+		p.start()
+		processes.append(p)
+		start_idx = end_idx
+		end_idx += responses_per_process
+
+	
+	for p in processes:
+		p.join()
+	#gen_snippets(patient, loved_one, responses)
+	
+
+
+	#upload all the snippets to the cloud, sometimes this fails so retry
+	try:
+		upload_snippets(patient, loved_one)
+	except:
+		print("Snippet upload failed, trying again")	
+		upload_snippets(patient, loved_one)
+
 
 #create main app
 app = Flask(__name__)
