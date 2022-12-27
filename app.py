@@ -43,9 +43,7 @@ def get_fname_for_sentence(sentence):
 	words = sentence.lower()
 	fname = ''
 	for letter in words:
-		if letter == '':
-			fname += '_'
-		elif not letter.isalpha():
+		if not letter.isalpha():
 			continue
 		else:
 			fname += letter
@@ -102,6 +100,8 @@ def train_models(patient,loved_one):
 	print(patient_responses)
 	print(loved_one_responses)
 	responses = cb.get_possible_responses(patient_responses, loved_one_responses)
+	
+	responses.extend(cb.get_prompts())
 	print(responses)
 	
 	processes = []
@@ -125,7 +125,6 @@ def train_models(patient,loved_one):
 	
 	for p in processes:
 		p.join()
-	#gen_snippets(patient, loved_one, responses)
 	
 
 
@@ -220,7 +219,6 @@ def get_response():
 		patient_responses = patient_responses_dict[patient]
 		response = cb.generate_response(models['chatbot'], user_input, patient_responses, loved_one_responses)
 		return {"response" : get_fname_for_sentence(response) + '.mp4'}
-
 
 if __name__ == "__main__":
 	pm.init()

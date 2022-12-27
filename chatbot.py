@@ -3,7 +3,6 @@ import copyreg
 import configparser
 import pathlib
 import json
-import random
 import numpy
 import tflearn
 import os
@@ -11,12 +10,14 @@ import pickle
 import tensorflow.compat.v1 as tensorflow
 tensorflow.disable_v2_behavior()
 from datetime import datetime
-
+import random
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 nltk.download('punkt')
 
+#random prompt stuff
+prompts = []
 
 with open("intents.json") as file:
 	data = json.load(file)
@@ -208,6 +209,9 @@ def group_of_words(s, words):
 
 	return numpy.array(group)
 
+def get_prompts():
+	return prompts
+	
 def test():
 	patient_attributes = {
 	"name": "John Smith",
