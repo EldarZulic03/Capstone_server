@@ -101,7 +101,6 @@ def train_models(patient,loved_one):
 	print(loved_one_responses)
 	responses = cb.get_possible_responses(patient_responses, loved_one_responses)
 	
-	responses.extend(cb.get_prompts())
 	print(responses)
 	
 	processes = []

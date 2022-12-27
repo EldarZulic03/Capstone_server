@@ -16,9 +16,6 @@ from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 nltk.download('punkt')
 
-#random prompt stuff
-prompts = []
-
 with open("intents.json") as file:
 	data = json.load(file)
 
@@ -209,8 +206,6 @@ def group_of_words(s, words):
 
 	return numpy.array(group)
 
-def get_prompts():
-	return prompts
 	
 def test():
 	patient_attributes = {
