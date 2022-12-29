@@ -61,12 +61,23 @@ def upload_snippets(patient, loved_one):
 		url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
 		print(url)
 
-
-#TODO: upload to firebase
-def gen_snippets(patient, loved_one, sentences, prompts_and_file_names):
-	print("Generating Snippets")
+#create .mp4 snippets for prompts and responses
+def gen_video_snippets(patient, loved_one):
+	print("Generating video snippets")
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
 	face = base_path + "face.jpeg"
+	snippets = base_path + "snippets/"
+	#sync the audio created in gen_audio_snippets to the face image
+	for filename in os.listdir(snippets+"audio"):
+		vid_name = filename.split('.')[0] + '.mp4'
+		f = os.path.join(snippets+"audio", filename)
+		ls = w2l.LipSyncer(f, face, snippets + 'video/' + vid_name)
+		ls.gen()	
+
+#create .wav snippets for prompts and responses
+def gen_audio_snippets(patient, loved_one, sentences, prompts_and_file_names):
+	print("Generating audio snippets")
+	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
 	voice = base_path + "voice.wav"
 	snippets = base_path + "snippets/"
 	vc = vcl.VoiceChanger()
@@ -81,13 +92,6 @@ def gen_snippets(patient, loved_one, sentences, prompts_and_file_names):
 	for prompt, filename in prompts_and_file_names:
 		vc.synthesize_sentence(prompt,snippets+"audio/"+filename+".wav")
 
-	#TODO: dont duplicate video generation, its fast enough to not make a difference but fix this
-	#sync the audio created above to the face image
-	for filename in os.listdir(snippets+"audio"):
-		vid_name = filename.split('.')[0] + '.mp4'
-		f = os.path.join(snippets+"audio", filename)
-		ls = w2l.LipSyncer(f, face, snippets + 'video/' + vid_name)
-		ls.gen()	
 
 
 #Train the models
@@ -122,6 +126,7 @@ def train_models(patient,loved_one):
 	start_prompt_idx = 0
 	end_prompt_idx = prompts_per_process
 
+	#create multiple processes to create the audio snippets bc of how long they take to synthesize
 	for i in range(NUM_PROCESSES):
 		#in case its not divisible by NUM_PROCESSES evenly
 		if i == NUM_PROCESSES - 1:
@@ -131,7 +136,7 @@ def train_models(patient,loved_one):
 		print("Assigning {}:{} to process {}".format(start_idx,end_idx,i))
 		p_responses = responses[start_idx : end_idx]
 		p_prompts_and_file_names = prompts_and_file_names[start_prompt_idx : end_prompt_idx]
-		p = Process(target=gen_snippets, args=(patient, loved_one, p_responses, p_prompts_and_file_names))
+		p = Process(target=gen_audio_snippets, args=(patient, loved_one, p_responses, p_prompts_and_file_names))
 		p.start()
 		processes.append(p)
 		start_idx = end_idx
@@ -143,12 +148,13 @@ def train_models(patient,loved_one):
 		p.join()
 	
 
+	gen_video_snippets(patient, loved_one)
 
 	#upload all the snippets to the cloud, sometimes this fails so retry
 	try:
 		upload_snippets(patient, loved_one)
-	except:
-		print("Snippet upload failed, trying again")	
+	except Exception as e:
+		print("Snippet upload failed, trying again. Exception is: {}".format(e))	
 		upload_snippets(patient, loved_one)
 
 
