@@ -16,6 +16,70 @@ from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 nltk.download('punkt')
 
+#prompt stuff
+prompts = [
+        "Do you know where you are?",
+        "You are in the hospital because you are sick.",
+        "Do you know what year it is?",
+        "Do you know what month it is?",
+        "Do you know what seasonit is?",
+        "Today is?",
+        "It is the year?",
+        "It is now?",
+        "How are you doing today?",
+        "Tell me about the day your first child was born.",
+        "Tell me about the time you first met your spouse.",
+        "Tell me about your wedding day.",
+        "Tell me about the happiest moment in your life.",
+        "How many children do you have?",
+        "Do you have a spouse?",
+        "Where do you live?",
+        "What are your hobbies?",
+        "Are you feeling scared?",
+        "Tell me more about how you are feeling.",
+        "Do you like to 1?",
+        "Do you like to 2?",
+        "Do you like to 3?",
+        "You must be feeling very scared right now.",
+        "Did you know that a cat has 32 muscles in each ear?",
+        "Did you know that most people fall asleep in seven minutes.mp4",
+        "Did you know that the first oranges were actually green.mp4",
+        "Did you know that there are 206 bones in the human body.mp4",
+        "Tell me about your friends in school.mp4",
+        "Tell me about your children.mp4"
+    ]
+file_names = [
+        "doyouknowwhereyouare",
+        "youareinthehospitalbecauseyouaresick",
+        "doyouknowwhatyearitis",
+        "doyouknowwhatmonthitis",
+        "doyouknowwhatseasonitis",
+        "todayis",
+        "itistheyear",
+        "itisnow",
+        "howareyoudoingtoday",
+        "tellmeaboutthedayyourfirstchildwasborn",
+        "tellmeaboutthetimeyoufirstmetyourspouse",
+        "tellmeaboutyourweddingday",
+        "tellmeaboutthehappiestmomentinyourlife",
+        "howmanychildrendoyouhave",
+        "doyouhaveaspouse",
+        "wheredoyoulive",
+        "whatareyourhobbies",
+        "areyoufeelingscared",
+        "tellmemoreabouthowyouarefeeling",
+        "doyouliketo1",
+        "doyouliketo2",
+        "doyouliketo3",
+        "youmustbefeelingveryscaredrightnow",
+        "didyouknowthatacathas32musclesineachear",
+        "didyouknowthatmostpeoplefallasleepinsevenminutes",
+        "didyouknowthatthefirstorangeswereactuallygreen",
+        "didyouknowthatthereare206bonesinthehumanbody",
+        "tellmeaboutyourfriendsinschool",
+        "tellmeaboutyourchildren"
+    ]
+
 with open("intents.json") as file:
 	data = json.load(file)
 
@@ -206,7 +270,26 @@ def group_of_words(s, words):
 
 	return numpy.array(group)
 
-	
+def get_prompts_and_file_name(patient_attributes,loved_one_attributes):
+	#TODO: replace prompts with filled data where applicable
+	#also filter spouse, children question as needed
+	custom_prompts = []
+	hobbies = patient_attributes['hobbies'].split(',')
+	print("hobbies is {}".format(hobbies))
+	for prompt in prompts:
+		if prompt == "Do you like to 1?":
+			prompt = "Do you like " + hobbies[0]
+		
+		elif prompt == "Do you like to 2?":
+			prompt = "Do you like " + hobbies[1]
+
+		elif prompt == "Do you like to 3?":
+			prompt = "Do you like " + hobbies[2]
+		custom_prompts.append(prompt)
+
+	return zip(custom_prompts,file_names)
+
+
 def test():
 	patient_attributes = {
 	"name": "John Smith",

@@ -63,7 +63,7 @@ def upload_snippets(patient, loved_one):
 
 
 #TODO: upload to firebase
-def gen_snippets(patient, loved_one, sentences):
+def gen_snippets(patient, loved_one, sentences, prompts_and_file_names):
 	print("Generating Snippets")
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
 	face = base_path + "face.jpeg"
@@ -71,10 +71,17 @@ def gen_snippets(patient, loved_one, sentences):
 	snippets = base_path + "snippets/"
 	vc = vcl.VoiceChanger()
 	vc.load_and_set_new_model(voice,"{}_{}".format(patient,loved_one))
-	#create .wavs for sentences
+	#create .wavs for sentences for the chatbot
 	for sentence in sentences:
 		fname = get_fname_for_sentence(sentence)
 		vc.synthesize_sentence(sentence,snippets+"audio/"+fname+".wav")
+
+	#now create the files for prompts
+
+	for prompt, filename in prompts_and_file_names:
+		vc.synthesize_sentence(prompt,snippets+"audio/"+filename+".wav")
+
+	#TODO: dont duplicate video generation, its fast enough to not make a difference but fix this
 	#sync the audio created above to the face image
 	for filename in os.listdir(snippets+"audio"):
 		vid_name = filename.split('.')[0] + '.mp4'
@@ -105,22 +112,32 @@ def train_models(patient,loved_one):
 	
 	processes = []
 	num_responses = len(responses)
-	responses_per_process = int(num_responses / 4)
+	responses_per_process = int(num_responses / NUM_PROCESSES)
 	start_idx = 0
 	end_idx = responses_per_process
+
+	prompts_and_file_names = list(cb.get_prompts_and_file_name(patient_responses,loved_one_responses))
+	num_prompts = len(prompts_and_file_names)
+	prompts_per_process = int(num_prompts / NUM_PROCESSES)
+	start_prompt_idx = 0
+	end_prompt_idx = prompts_per_process
+
 	for i in range(NUM_PROCESSES):
 		#in case its not divisible by NUM_PROCESSES evenly
 		if i == NUM_PROCESSES - 1:
 			end_idx = num_responses
+			end_prompt_idx = prompts_per_process
 
 		print("Assigning {}:{} to process {}".format(start_idx,end_idx,i))
 		p_responses = responses[start_idx : end_idx]
-		p = Process(target=gen_snippets, args=(patient, loved_one, p_responses))
+		p_prompts_and_file_names = prompts_and_file_names[start_prompt_idx : end_prompt_idx]
+		p = Process(target=gen_snippets, args=(patient, loved_one, p_responses, p_prompts_and_file_names))
 		p.start()
 		processes.append(p)
 		start_idx = end_idx
 		end_idx += responses_per_process
-
+		start_prompt_idx = end_prompt_idx
+		end_prompt_idx += prompts_per_process
 	
 	for p in processes:
 		p.join()
