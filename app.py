@@ -218,10 +218,21 @@ def manage_loved_one():
 		pm.delete_loved_one(int(data['p_idx']),int(data['lo_idx']))
 		return {}
 
-@app.route('/prompts', methods=['GET'])
+@app.route('/prompts', methods=['POST'])
 def get_prompt():
-	if request.method == 'GET':
-		return {"response" : cb.get_random_prompt()}
+	data = request.get_json()
+	print(data)
+	if request.method == 'POST':
+		loved_one = data['lo_idx']
+		patient = data['p_idx']
+
+		#load the responses in memory since there will be heavy reuse
+		if patient not in patient_responses_dict:
+			with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
+				patient_responses = pickle.load(handle)
+				patient_responses_dict[patient] = patient_responses
+		
+		return {"response" : cb.get_random_prompt(patient_responses_dict[patient])}
 
 
 @app.route('/responses', methods=['POST'])

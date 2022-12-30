@@ -267,9 +267,19 @@ def group_of_words(s, words):
 
 	return numpy.array(group)
 
-def get_random_prompt():
-	idx = random.randint(0,len(file_names) - 1)
-	return file_names[idx]
+def get_random_prompt(patient_attributes):
+	#print(patient_attributes)
+	has_spouse = patient_attributes['spouse'] != ''
+	has_children = patient_attributes['children'] != ''
+	print("Getting prompt with has_children = {} and has spouse = {}".format(has_children,has_spouse))	
+	while True:
+		idx = random.randint(0,len(file_names) - 1)
+		res = file_names[idx]
+		if not has_children and 'child' in res:
+			continue
+		if not has_spouse and ('spouse' in res or 'wedding' in res):
+			continue
+		return res
 
 def get_prompts_and_file_name(patient_attributes,loved_one_attributes):
 	#TODO: replace prompts with filled data where applicable
