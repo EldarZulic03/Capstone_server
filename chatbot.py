@@ -13,6 +13,8 @@ from datetime import datetime
 import random
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
+from datetime import datetime
+
 stemmer = LancasterStemmer()
 nltk.download('punkt')
 
@@ -39,11 +41,18 @@ prompts = [
         "Do you like to 3?",
         "You must be feeling very scared right now.",
         "Did you know that a cat has 32 muscles in each ear?",
-        "Did you know that most people fall asleep in seven minutes.mp4",
-        "Did you know that the first oranges were actually green.mp4",
-        "Did you know that there are 206 bones in the human body.mp4",
-        "Tell me about your friends in school.mp4",
-        "Tell me about your children.mp4"
+        "Did you know that most people fall asleep in seven minutes?",
+        "Did you know that the first oranges were actually green?",
+        "Did you know that there are 206 bones in the human body?",
+        "Tell me about your friends in school.",
+        "Tell me about your children.",
+		"It is Monday.",
+		"It is Tuesday.",
+		"It is Wednesday.",
+		"It is Thursday.",
+		"It is Friday.",
+		"It is Saturday.",
+		"It is Sunday.",
     ]
 file_names = [
         "doyouknowwhereyouare",
@@ -74,7 +83,14 @@ file_names = [
         "didyouknowthatthefirstorangeswereactuallygreen",
         "didyouknowthatthereare206bonesinthehumanbody",
         "tellmeaboutyourfriendsinschool",
-        "tellmeaboutyourchildren"
+        "tellmeaboutyourchildren",
+		"monday",
+		"tuesday",
+		"wednesday",
+		"thursday",
+		"friday",
+		"saturday",
+		"sunday"
     ]
 
 with open("intents.json") as file:
@@ -273,12 +289,19 @@ def get_random_prompt(patient_attributes):
 	has_children = patient_attributes['children'] != ''
 	print("Getting prompt with has_children = {} and has spouse = {}".format(has_children,has_spouse))	
 	while True:
-		idx = random.randint(0,len(file_names) - 1)
+		#idx = random.randint(0,len(file_names) - 1)
+		idx = len(file_names) - 1
 		res = file_names[idx]
+		#dont give children or spouse related prompts if they have none
 		if not has_children and 'child' in res:
 			continue
 		if not has_spouse and ('spouse' in res or 'wedding' in res):
 			continue
+		#make sure to give current day of week
+		if res in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'):
+			dt = datetime.now()
+			curr_day = dt.strftime('%A')
+			res = curr_day.lower()
 		return res
 
 def get_prompts_and_file_name(patient_attributes,loved_one_attributes):
@@ -306,8 +329,8 @@ def test():
 	"name": "John Smith",
 	"date_of_birth": "2021/01/01",
 	"gender": "Male",
-	"children": "Jack Smith, Jane Smith",
-	"spouse": "Rachel Smith",
+	"children": "Jack Smith,Jane Smith",
+	"spouse": "Rachel",
 	"residence": "Toronto, Ontario",
 	"hobbies": "swimming, cooking",
 	"hospital": "Toronto Western Hospital"
@@ -322,7 +345,7 @@ def test():
 		"hobbies": "writing, reading"
 	}
 	trained_model = train_model()
-	print(get_possible_responses(patient_attributes, loved_one_attributes))
-	generate_response(trained_model, "what is your name", patient_attributes, loved_one_attributes)
-
-#test()
+	#print(get_possible_responses(patient_attributes, loved_one_attributes))
+	#generate_response(trained_model, "what is your name", patient_attributes, loved_one_attributes)
+	print(get_random_prompt(patient_attributes))
+test()
