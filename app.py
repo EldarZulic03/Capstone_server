@@ -218,6 +218,12 @@ def manage_loved_one():
 		pm.delete_loved_one(int(data['p_idx']),int(data['lo_idx']))
 		return {}
 
+@app.route('/prompts', methods=['GET'])
+def get_prompt():
+	if request.method == 'GET':
+		return {"response" : cb.get_random_prompt()}
+
+
 @app.route('/responses', methods=['POST'])
 def get_response():
 	data = request.get_json()

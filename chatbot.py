@@ -270,6 +270,10 @@ def group_of_words(s, words):
 
 	return numpy.array(group)
 
+def get_random_prompt():
+	idx = random.randint(0,len(file_names) - 1)
+	return file_names[idx]
+
 def get_prompts_and_file_name(patient_attributes,loved_one_attributes):
 	#TODO: replace prompts with filled data where applicable
 	#also filter spouse, children question as needed
