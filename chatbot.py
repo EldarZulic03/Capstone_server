@@ -289,8 +289,7 @@ def get_random_prompt(patient_attributes):
 	has_children = patient_attributes['children'] != ''
 	print("Getting prompt with has_children = {} and has spouse = {}".format(has_children,has_spouse))	
 	while True:
-		#idx = random.randint(0,len(file_names) - 1)
-		idx = len(file_names) - 1
+		idx = random.randint(0,len(file_names) - 1)
 		res = file_names[idx]
 		#dont give children or spouse related prompts if they have none
 		if not has_children and 'child' in res:
@@ -348,4 +347,4 @@ def test():
 	#print(get_possible_responses(patient_attributes, loved_one_attributes))
 	#generate_response(trained_model, "what is your name", patient_attributes, loved_one_attributes)
 	print(get_random_prompt(patient_attributes))
-test()
+#test()
