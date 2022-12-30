@@ -125,15 +125,15 @@ def train_models(patient,loved_one):
 	prompts_per_process = int(num_prompts / NUM_PROCESSES)
 	start_prompt_idx = 0
 	end_prompt_idx = prompts_per_process
-
+	print("Splitting {} prompts and {} responses amongst {} processes".format(num_prompts,num_responses,NUM_PROCESSES))
 	#create multiple processes to create the audio snippets bc of how long they take to synthesize
 	for i in range(NUM_PROCESSES):
 		#in case its not divisible by NUM_PROCESSES evenly
 		if i == NUM_PROCESSES - 1:
 			end_idx = num_responses
-			end_prompt_idx = prompts_per_process
+			end_prompt_idx = num_prompts
 
-		print("Assigning {}:{} to process {}".format(start_idx,end_idx,i))
+		print("Assigning {}:{} and {}:{} to process {}".format(start_idx,end_idx,start_prompt_idx, end_prompt_idx,i))
 		p_responses = responses[start_idx : end_idx]
 		p_prompts_and_file_names = prompts_and_file_names[start_prompt_idx : end_prompt_idx]
 		p = Process(target=gen_audio_snippets, args=(patient, loved_one, p_responses, p_prompts_and_file_names))
