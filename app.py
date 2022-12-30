@@ -169,8 +169,8 @@ def training_data():
 	p_idx = data['p_idx']
 	lo_idx = data['lo_idx']
 	base_dir = 'people_data/patient_data/{}/{}/'.format(p_idx,lo_idx)
-	fbm.download_file("training_data/face.jpeg",base_dir + "face.jpeg")
-	fbm.download_file("training_data/voice.m4a",base_dir + "voice.m4a")
+	fbm.download_file("training_data/{}/{}/face.jpeg".format(p_idx,lo_idx),base_dir + "face.jpeg")
+	fbm.download_file("training_data/{}/{}/voice.m4a".format(p_idx,lo_idx),base_dir + "voice.m4a")
 	m4a_file = base_dir + 'voice.m4a'
 	wav_filename = base_dir + "voice.wav"
 	track = AudioSegment.from_file(m4a_file,  format= 'm4a')
