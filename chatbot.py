@@ -60,9 +60,6 @@ file_names = [
         "doyouknowwhatyearitis",
         "doyouknowwhatmonthitis",
         "doyouknowwhatseasonitis",
-        "todayis",
-        "itistheyear",
-        "itisnow",
         "howareyoudoingtoday",
         "tellmeaboutthedayyourfirstchildwasborn",
         "tellmeaboutthetimeyoufirstmetyourspouse",
@@ -331,7 +328,7 @@ def test():
 	"children": "Jack Smith,Jane Smith",
 	"spouse": "Rachel",
 	"residence": "Toronto, Ontario",
-	"hobbies": "swimming, cooking",
+	"hobbies": "swimming, cooking,fishing",
 	"hospital": "Toronto Western Hospital"
 	}
 	loved_one_attributes = {
@@ -341,10 +338,12 @@ def test():
 		"children": "",
 		"spouse": "",
 		"residence": "Toronto, Ontario",
-		"hobbies": "writing, reading"
+		"hobbies": "writing, reading,eating"
 	}
 	trained_model = train_model()
 	#print(get_possible_responses(patient_attributes, loved_one_attributes))
 	#generate_response(trained_model, "what is your name", patient_attributes, loved_one_attributes)
-	print(get_random_prompt(patient_attributes))
+	#print(get_random_prompt(patient_attributes))
+	
+	print(list(get_prompts_and_file_name(patient_attributes,loved_one_attributes)))
 #test()
