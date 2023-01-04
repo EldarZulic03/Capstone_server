@@ -17,13 +17,6 @@ patient_uuid = 1
 #key is patient id, value is current id for loved one
 patient_loved_one_uuid = 1
 
-#store some basic string info about a person
-class Person:	
-	def __init__(self, name, gender, dob):
-		self.dob = dob
-		self.name = name
-		self.gender = gender
-
 def save_to_disk(data, filename):
 	with open('people_data/' + filename, 'wb') as handle:
 		pickle.dump(data, handle)	
@@ -31,7 +24,7 @@ def save_to_disk(data, filename):
 #get all patients
 def get_all_patients():
 	global patients
-	return {"patients": [{"p_idx" : str(p), "name" : patients[p].name, "gender" : patients[p].gender, "DOB" : patients[p].dob} for p in patients]}
+	return {"patients": [{"p_idx" : str(p), "name" : patients[p]["name"], "gender" : patients[p]["gender"], "DOB" : patients[p]["dob"]} for p in patients]}
 
 #get all loved ones for a given patient
 def get_all_loved_ones():
@@ -41,7 +34,7 @@ def get_all_loved_ones():
 		loved_one_list = loved_ones[p]
 		for loved_one in loved_one_list:
 			lo = loved_one_list[loved_one]
-			res.append({"p_idx":str(p),"lo_idx" : str(loved_one), "name" : lo.name, "gender" : lo.gender, "DOB" : lo.dob})		
+			res.append({"p_idx":str(p),"lo_idx" : str(loved_one), "name" : lo["name"], "gender" : lo["gender"], "DOB" : lo["dob"]})		
 	return {"loved_ones" : res}
 
 #get a loved one
@@ -95,7 +88,7 @@ def delete_patient(p_idx):
 		return ''
 #add loved one
 def add_loved_one(p_idx, name, gender, dob, responses):
-	loved_one = Person(name, gender, dob)
+	loved_one = {"name":name,"gender":gender,"dob":dob}
 	global patients
 	global patient_loved_one_uuid
 	global loved_ones
@@ -117,7 +110,7 @@ def add_loved_one(p_idx, name, gender, dob, responses):
 
 #add a patient
 def add_patient(name, gender, dob, responses):
-	patient = Person(name, gender, dob)
+	patient = {"name":name,"gender":gender,"dob":dob}
 	global patient_uuid
 	global patients
 	global loved_ones
@@ -164,8 +157,8 @@ def init():
 		with open('people_data/patient_loved_one_uuid', 'rb') as handle:
 			patient_loved_one_uuid = pickle.load(handle)
 
-	for p in patients:
-		print("Found patient {}:{} on init".format(p,patients[p].name))
+	#for p in patients:
+	#	print("Found patient {}:{} on init".format(p,patients[p].name))
 
 def dump_all():
 	print("###DUMP###")
