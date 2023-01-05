@@ -58,7 +58,12 @@ def upload_snippets(patient, loved_one):
 	#upload all the snippets to the cloud
 	for filename in os.listdir(snippets+"video"):
 		dst_file = "{}/{}/{}".format(patient, loved_one, filename)
-		url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
+		url = ''
+		try:
+			url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
+		except Exception as e:
+			print("firebase upload failed with exception: {}".format(e))
+			url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
 		print(url)
 
 #create .mp4 snippets for prompts and responses
@@ -151,12 +156,7 @@ def train_models(patient,loved_one):
 	gen_video_snippets(patient, loved_one)
 
 	#upload all the snippets to the cloud, sometimes this fails so retry
-	try:
-		upload_snippets(patient, loved_one)
-	except Exception as e:
-		print("Snippet upload failed, trying again. Exception is: {}".format(e))	
-		upload_snippets(patient, loved_one)
-
+	upload_snippets(patient, loved_one)
 
 #create main app
 app = Flask(__name__)
