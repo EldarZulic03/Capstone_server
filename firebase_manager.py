@@ -46,17 +46,15 @@ def get_loved_one(p_idx, lo_idx):
 	return db.collection('patients').document(str(p_idx)).get().to_dict()['loved_ones'][str(lo_idx)]
 
 def add_loved_one(p_idx, name, gender, dob, responses):
-	patient = get_patient(p_idx)
 	lo_idx = get_counter_and_increment('lo_index')
 	entry = {'name' : name, 'gender' : gender, 'dob' : dob, 'responses' : responses}
-	patient['loved_ones'][str(lo_idx)] = entry
-	db.collection('patients').document(str(p_idx)).set(patient)
+	patient_doc = db.collection('patients').document(str(p_idx))
+	patient_doc.update({'loved_ones.{}'.format(lo_idx) : entry})
 	return lo_idx
 
 def delete_loved_one(p_idx,lo_idx):
-	patient = get_patient(p_idx)
-	patient['loved_ones'].pop(str(lo_idx))
-	db.collection('patients').document(str(p_idx)).set(patient)
+	patient_doc = db.collection('patients').document(str(p_idx))
+	patient_doc.update({'loved_ones.{}'.format(lo_idx) : firestore.DELETE_FIELD})
 
 def delete_patient(p_idx):
 	db.collection('patients').document(str(p_idx)).delete()	
@@ -87,12 +85,13 @@ def test():
 	#reset_counters()
 	#delete_patient(1)
 	#print(get_loved_one(1,3))
-	#delete_loved_one(1,3)
+	#delete_loved_one(1,5)
 	#add_patient('Tim','Male','2022/11/11', {'hobbies' : 'running', 'city' : 'ajax'})
 	#add_patient('Jim','Male','2022/8/7', {'hobbies' : 'eating', 'city' : 'pickering'})
 	#add_loved_one(1,'Rob','Male','2022/8/7', {'hobbies' : 'jumping', 'city' : 'oshawa'})
 	#add_loved_one(2,'Bob','Male','2022/8/7', {'hobbies' : 'jumping', 'city' : 'oshawa'})
 	#add_loved_one(1,'Rick','Male','2022/8/7', {'hobbies' : 'jumping', 'city' : 'oshawa'})
+	#add_loved_one(1,'Thomas','Male','2022/8/7', {'hobbies' : 'eating', 'city' : 'pickering'})
 	#for i in range(5):
 	#	print(get_counter_and_increment('lo_index'))
 
@@ -104,4 +103,4 @@ def test():
 	#res = upload_file("image.jpeg","test.jpeg")
 	#print("your file url {}".format(res))
 
-test()
+#test()
