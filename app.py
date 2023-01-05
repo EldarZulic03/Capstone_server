@@ -85,7 +85,7 @@ def gen_audio_snippets(patient, loved_one, sentences, prompts_and_file_names):
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
 	voice = base_path + "voice.wav"
 	snippets = base_path + "snippets/"
-	vc = vcl.VoiceChanger()
+	vc = vcl.VoiceCloner()
 	vc.load_and_set_new_model(voice,"{}_{}".format(patient,loved_one))
 	#create .wavs for sentences for the chatbot
 	for sentence in sentences:

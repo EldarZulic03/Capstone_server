@@ -16,7 +16,7 @@ from voice_cloning.vocoder import inference as vocoder
 
 
 
-class VoiceChanger:
+class VoiceCloner:
     
     def __init__(self):
         self.enc_model_fpath = Path("voice_cloning/saved_models/default/encoder.pt")
@@ -142,7 +142,7 @@ class VoiceChanger:
 """
 if __name__ == '__main__':
     print("Hello World")
-    vc = VoiceChanger()
+    vc = VoiceCloner()
     vc.load_and_set_new_model("../test/trump.wav","trump")
     vc.load_and_set_new_model("../test/sponge.wav","spongebob")
     vc.set_current_model("trump")
