@@ -228,9 +228,8 @@ def get_prompt():
 
 		#load the responses in memory since there will be heavy reuse
 		if patient not in patient_responses_dict:
-			with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
-				patient_responses = pickle.load(handle)
-				patient_responses_dict[patient] = patient_responses
+			patient_responses = pm.get_patient(patient)['responses']
+			patient_responses_dict[patient] = patient_responses
 		
 		return {"response" : cb.get_random_prompt(patient_responses_dict[patient])}
 
@@ -246,13 +245,11 @@ def get_response():
 
 		#load the responses in memory since there will be heavy reuse
 		if patient not in patient_responses_dict:
-			with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
-				patient_responses = pickle.load(handle)
-				patient_responses_dict[patient] = patient_responses
+			patient_responses = pm.get_patient(patient)['responses']
+			patient_responses_dict[patient] = patient_responses
 		if loved_one not in loved_one_responses_dict:
-			with open('people_data/patient_data/{}/{}/responses'.format(patient,loved_one), 'rb') as handle:
-				loved_one_responses = pickle.load(handle)
-				loved_one_responses_dict[loved_one] = loved_one_responses
+			loved_one_responses = pm.get_loved_one(patient, loved_one)['responses']
+			loved_one_responses_dict[loved_one] = loved_one_responses
 		
 		loved_one_responses = loved_one_responses_dict[loved_one] 
 		patient_responses = patient_responses_dict[patient]

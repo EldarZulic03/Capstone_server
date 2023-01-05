@@ -1,12 +1,12 @@
 from firebase_admin import credentials, initialize_app, storage, firestore
 
+db = []
 def init():
 	# Init firebase with your credentials
 	cred = credentials.Certificate("virtual-presence-app-2a440e2cacfc.json")
 	initialize_app(cred, {'storageBucket': 'virtual-presence-app.appspot.com'})
-
-init()
-db = firestore.client()
+	global db
+	db = firestore.client()
 
 def reset_counters():
 	tmp = {'idx' : 1}
