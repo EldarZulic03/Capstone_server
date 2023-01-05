@@ -33,7 +33,7 @@ def get_all_loved_ones():
 #get a loved one
 def get_loved_one(p_idx, lo_idx):
 	#TODO: error handling here
-	return fmb.get_loved_one(p_idx,lo_idx)
+	return fbm.get_loved_one(p_idx,lo_idx)
 
 #get a patient
 def get_patient(idx):
