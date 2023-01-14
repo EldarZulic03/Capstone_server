@@ -53,6 +53,8 @@ def delete_patient(p_idx):
 #add loved one
 def add_loved_one(p_idx, name, gender, dob, responses):
 	curr_idx = fbm.add_loved_one(p_idx, name, gender, dob, responses)
+	if not os.path.exists('people_data/patient_data/' + str(p_idx)):
+		os.mkdir('people_data/patient_data/' + str(p_idx))	
 	os.mkdir('people_data/patient_data/' + str(p_idx) + '/' + str(curr_idx))
 	os.mkdir('people_data/patient_data/' + str(p_idx) + '/' + str(curr_idx) + '/snippets')
 	os.mkdir('people_data/patient_data/' + str(p_idx) + '/' + str(curr_idx) + '/snippets/audio')
@@ -70,10 +72,10 @@ def add_patient(name, gender, dob, responses):
 #read existing data from disk, other wise initialize
 def init():
 	print("Initializing people manager")
-	if os.path.exists('people_data') == False:
+	if not os.path.exists('people_data'):
 		os.mkdir('people_data')
 
-	if os.path.exists('people_data/patient_data') == False:
+	if not os.path.exists('people_data/patient_data'):
 		os.mkdir('people_data/patient_data')
 
 print("Test")
