@@ -108,10 +108,9 @@ def train_models(patient,loved_one):
 
 	loved_one_responses = {} 
 	patient_responses = {}
-	with open('people_data/patient_data/{}/responses'.format(patient), 'rb') as handle:
-		patient_responses = pickle.load(handle)	
-	with open('people_data/patient_data/{}/{}/responses'.format(patient,loved_one), 'rb') as handle:
-		loved_one_responses = pickle.load(handle)
+	patient_responses = pm.get_patient(patient)['responses']
+	loved_one_responses = pm.get_loved_one(patient, loved_one)['responses']
+
 	#merge them
 	print(patient_responses)
 	print(loved_one_responses)
