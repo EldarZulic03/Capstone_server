@@ -73,11 +73,6 @@
         "patterns": ["how is your spouse", "how is your husband", "how is your wife", "do you have a spouse", "do you have a husband", "do you have a wife", "who is your spouse", "who is your husband", "who is your wife", "where is your spouse", "where is your husband", "where is your wife", "your spouse", "your husband", "your wife"],
         "responses": [""],
         "context_set": ""
-       },
-       {"tag": "time",
-        "patterns": ["whats the time", "what time is it", "what is the time", "time"],
-        "responses": ["It is "],
-        "context_set": ""
        }
    ]
 }
