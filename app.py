@@ -51,8 +51,6 @@ def get_fname_for_sentence(sentence):
 
 def upload_snippets(patient, loved_one):
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
-	face = base_path + "face.jpeg"
-	voice = base_path + "voice.wav"
 	snippets = base_path + "snippets/"
 	
 	#upload all the snippets to the cloud
@@ -70,7 +68,7 @@ def upload_snippets(patient, loved_one):
 def gen_video_snippets(patient, loved_one):
 	print("Generating video snippets")
 	base_path = "people_data/patient_data/{}/{}/".format(patient, loved_one)
-	face = base_path + "face.jpeg"
+	face = base_path + "face.mp4"
 	snippets = base_path + "snippets/"
 	#sync the audio created in gen_audio_snippets to the face image
 	for filename in os.listdir(snippets+"audio"):
@@ -115,7 +113,6 @@ def train_models(patient,loved_one):
 	print(patient_responses)
 	print(loved_one_responses)
 	responses = cb.get_possible_responses(patient_responses, loved_one_responses)
-	
 	print(responses)
 	
 	processes = []
@@ -125,6 +122,7 @@ def train_models(patient,loved_one):
 	end_idx = responses_per_process
 
 	prompts_and_file_names = list(cb.get_prompts_and_file_name(patient_responses,loved_one_responses))
+
 	num_prompts = len(prompts_and_file_names)
 	prompts_per_process = int(num_prompts / NUM_PROCESSES)
 	start_prompt_idx = 0
@@ -168,7 +166,8 @@ def training_data():
 	p_idx = data['p_idx']
 	lo_idx = data['lo_idx']
 	base_dir = 'people_data/patient_data/{}/{}/'.format(p_idx,lo_idx)
-	fbm.download_file("training_data/{}/{}/face.jpeg".format(p_idx,lo_idx),base_dir + "face.jpeg")
+	fbm.download_file("training_data/{}/{}/face.mov".format(p_idx,lo_idx),base_dir + "face.mov")
+	subprocess.call(['ffmpeg', '-i', base_dir + "face.mov", base_dir + "face.mp4"])
 	fbm.download_file("training_data/{}/{}/voice.m4a".format(p_idx,lo_idx),base_dir + "voice.m4a")
 	m4a_file = base_dir + 'voice.m4a'
 	wav_filename = base_dir + "voice.wav"
