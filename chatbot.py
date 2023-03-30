@@ -285,6 +285,7 @@ def get_random_prompt(patient_attributes):
 	has_spouse = patient_attributes['spouse'] != ''
 	has_children = patient_attributes['children'] != ''
 	print("Getting prompt with has_children = {} and has spouse = {}".format(has_children,has_spouse))	
+	random.seed(datetime.now().timestamp())
 	while True:
 		idx = random.randint(0,len(file_names) - 1)
 		res = file_names[idx]
@@ -344,6 +345,6 @@ def test():
 	#print(get_possible_responses(patient_attributes, loved_one_attributes))
 	#generate_response(trained_model, "what is your name", patient_attributes, loved_one_attributes)
 	#print(get_random_prompt(patient_attributes))
-	
+	get_random_prompt(patient_attributes)	
 	print(list(get_prompts_and_file_name(patient_attributes,loved_one_attributes)))
 #test()
