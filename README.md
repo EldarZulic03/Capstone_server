@@ -12,6 +12,9 @@ Start server using: python app.py
 
 Then go to: 127.0.0.1:5000 (or whichever host you specify using --host to see what the server displays)
 
+you need to do any testing with the server you can change the app.run line in app.py to app.run(debug=True,host="0.0.0.0",port=7000) might have to play around with the port value to find something available. That should make it available on all interfaces of your device. Then you can do ifconfig and check en0 for the ipv4 address and replace the ip/port with the ip you see from the command and the port you chose in the frontend where the localhost ip is specified
+
+
 to be able to use the deepfake you need to run ""brew install ffmpeg" and pip install -r requirements.txt. You may have to pip or brew install the packages in requirements.txt one by one if you find some trouble
 
 If on an M1 mac and pyaudio is causing trouble this might be useful: https://qiita.com/yukilab/items/d50a10f1d46c44ae0757
