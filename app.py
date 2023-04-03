@@ -63,6 +63,11 @@ def upload_snippets(patient, loved_one):
 			print("firebase upload failed with exception: {}".format(e))
 			url = fbm.upload_file(os.path.join(snippets,"video",filename),dst_file)
 		print(url)
+	
+	#upload the nod video
+	nod_path = "people_data/patient_data/{}/{}/face.mp4".format(patient, loved_one)
+	url = fbm.upload_file(nod_path,"{}/{}/{}".format(patient, loved_one, "nod.mp4"))
+	print(url)
 
 #create .mp4 snippets for prompts and responses
 def gen_video_snippets(patient, loved_one):
@@ -101,7 +106,7 @@ def gen_audio_snippets(patient, loved_one, sentences, prompts_and_file_names):
 #TODO: eventaully we cant keep using placeholder data
 def train_models(patient,loved_one):
 	#temporarily use placeholder data until audio upload is working...
-	shutil.copyfile('test_data/trump.jpeg', 'people_data/patient_data/{}/{}/face.jpeg'.format(patient,loved_one))	
+	shutil.copyfile('test_data/face.mp4', 'people_data/patient_data/{}/{}/face.mp4'.format(patient,loved_one))	
 	shutil.copyfile('test_data/trump.wav', 'people_data/patient_data/{}/{}/voice.wav'.format(patient,loved_one))
 
 	loved_one_responses = {} 
