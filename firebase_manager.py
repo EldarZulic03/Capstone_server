@@ -1,6 +1,6 @@
 from firebase_admin import credentials, initialize_app, storage, firestore
 
-db = []
+db = None
 def init():
 	# Init firebase with your credentials
 	cred = credentials.Certificate("virtual-presence-app-2a440e2cacfc.json")

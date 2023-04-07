@@ -78,18 +78,3 @@ def init():
 	if not os.path.exists('people_data/patient_data'):
 		os.mkdir('people_data/patient_data')
 
-print("Test")
-#get_all_patients()
-#init()
-'''
-dump_all()
-add_patient("Steve James","male","11/08/2000")
-dump_all()
-add_patient("Bob John","male","8/09/2003")
-dump_all()
-delete_patient(1)
-add_loved_one(2,"Bill","male","6/6/2003")
-add_loved_one(2,"Jack","male","6/7/1999")
-dump_all()
-delete_loved_one(2,1)
-dump_all()'''
