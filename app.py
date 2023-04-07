@@ -103,11 +103,8 @@ def gen_audio_snippets(patient, loved_one, sentences, prompts_and_file_names):
 
 
 #Train the models
-#TODO: eventaully we cant keep using placeholder data
 def train_models(patient,loved_one):
 	#temporarily use placeholder data until audio upload is working...
-	#shutil.copyfile('test_data/face.mp4', 'people_data/patient_data/{}/{}/face.mp4'.format(patient,loved_one))	
-	#shutil.copyfile('test_data/trump.wav', 'people_data/patient_data/{}/{}/voice.wav'.format(patient,loved_one))
 
 	loved_one_responses = {} 
 	patient_responses = {}
