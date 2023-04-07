@@ -3,6 +3,8 @@ Capstone Repo
 
 #####SETUP######
 
+Firstly you need to download and add a couple of files that GitHub wont let us store in the repo for free
+
 You need to download the synthesizer.pt and store it under   voice_cloning/saved_models/default/synthesizer.pt. Can download from here: https://drive.google.com/file/d/1YAoaMeMSb68xp-iOf9CRliAGK2iCncPP/view?usp=sharing
 
 
