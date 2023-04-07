@@ -48,7 +48,7 @@ We use local storage for ML training, and firebase to host our snippets, so this
 
 
 ---chatbot.py---
-has the chatbot which provides responses which get populated after the fact with personal information.
+has the chatbot which provides responses which get populated after the fact with personal information. To add new intents, modify intents.json
 
 #####Understanding the data management, filesystem and firebase storage#####
 
