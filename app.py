@@ -104,7 +104,6 @@ def gen_audio_snippets(patient, loved_one, sentences, prompts_and_file_names):
 
 #Train the models
 def train_models(patient,loved_one):
-	#temporarily use placeholder data until audio upload is working...
 
 	loved_one_responses = {} 
 	patient_responses = {}
