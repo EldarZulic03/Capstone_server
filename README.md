@@ -40,9 +40,13 @@ This module manages the loved ones and patient data and sets up our local file s
 
 Like the name suggests, this is a wrapper on the open source voice cloning code, the main class is called VoiceChanger because I miss named it and need to change it... but besides that it abstracts a lot of the complexity of the code away and allows use to create and set models using voice.wav, and synthesize sentences using models.
 
+https://github.com/CorentinJ/Real-Time-Voice-Cloning
+
 ---wav2lip_wrapper.py---
 
 This is the wrapper for the lip syncing deepfake code. We use it to pass the resulting synthesized audio and the image to create the deepfake snippet.
+
+https://github.com/Rudrabha/Wav2Lip
 
 ---firebase_manager.py---
 
