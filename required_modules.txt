@@ -35,3 +35,5 @@ pydub
 tflearn
 nltk
 tensorflow
+Flask-Session
+pickle5
